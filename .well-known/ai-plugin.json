@@ -9,9 +9,9 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://YOUR-RENDER-URL.com/openapi.yaml"
+    "url": "https://chatgpt-sheets.onrender.com/openapi.yaml"
   },
-  "logo_url": "https://YOUR-RENDER-URL.com/logo.png",
+  "logo_url": "https://static.wixstatic.com/media/9a38cc_9bcd9a4c4ee244c2b634a4a8df1d8c10~mv2.png/v1/fill/w_304,h_100,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Untitled.png",
   "contact_email": "karla@silverstay.com",
   "legal_info_url": "https://silverstay.com/terms"
 }
