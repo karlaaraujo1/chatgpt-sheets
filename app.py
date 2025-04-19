@@ -1,39 +1,16 @@
 from flask import Flask, jsonify, request, send_from_directory
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
 import os
 
 app = Flask(__name__)
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
+# 🧪 Mock data for GPT integration testing
 def get_sheet_data():
-    # TEMP: Return mock data for GPT testing
     return [
         ["ID", "City", "Hospice", "Standing"],
         ["1", "Gambrills", "Yes", "In Good Standing"],
         ["2", "Baltimore", "No", "Probation"],
         ["3", "Annapolis", "Yes", "In Good Standing"]
     ]
-
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-        creds = flow.run_local_server(port=8080)
-        with open('token.json', 'w') as token_file:
-            token_file.write(creds.to_json())
-
-    service = build('sheets', 'v4', credentials=creds)
-    sheet_id = '1fuBumZ6r4152F-xxEqmWyOADS4ZJKBVjM6JzGPHyy-Q'
-    range_name = 'NEW_rawdata!A1:ZZ'
-
-    result = service.spreadsheets().values().get(
-        spreadsheetId=sheet_id,
-        range=range_name
-    ).execute()
-
-    return result.get('values', [])
 
 @app.route('/data', methods=['GET'])
 def get_data():
@@ -66,7 +43,7 @@ def get_data():
 
     return jsonify(structured_data)
 
-# 🧠 Serve plugin files for GPT
+# 🔌 Serve plugin files for GPT
 @app.route('/.well-known/ai-plugin.json')
 def serve_ai_plugin():
     return send_from_directory('.well-known', 'ai-plugin.json', mimetype='application/json')
@@ -75,6 +52,7 @@ def serve_ai_plugin():
 def serve_openapi_spec():
     return send_from_directory('.', 'openapi.yaml', mimetype='application/yaml')
 
+# 🌐 Ensure the app works with Render's port/environment
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
