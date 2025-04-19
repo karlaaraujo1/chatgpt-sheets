@@ -8,7 +8,13 @@ app = Flask(__name__)
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
 def get_sheet_data():
-    creds = None
+    # TEMP: Return mock data for GPT testing
+    return [
+        ["ID", "City", "Hospice", "Standing"],
+        ["1", "Gambrills", "Yes", "In Good Standing"],
+        ["2", "Baltimore", "No", "Probation"],
+        ["3", "Annapolis", "Yes", "In Good Standing"]
+    ]
 
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
