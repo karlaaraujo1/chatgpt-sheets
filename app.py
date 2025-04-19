@@ -12,11 +12,11 @@ def get_sheet_data():
         ["3", "Annapolis", "Yes", "In Good Standing"]
     ]
 
-@app.route('/openapi.yaml')
-def serve_openapi_spec():
-    with open("openapi.yaml", "r") as f:
-        content = f.read()
-    return content, 200, {'Content-Type': 'application/yaml'}
+@app.route('/data', methods=['GET'])
+def get_data():
+    values = get_sheet_data()
+    if not values or len(values) < 2:
+        return jsonify([])
 
     headers = values[0]
     data_rows = values[1:]
@@ -46,11 +46,12 @@ def serve_openapi_spec():
 def serve_ai_plugin():
     return send_from_directory('.well-known', 'ai-plugin.json', mimetype='application/json')
 
-# 📜 Serve openapi.yaml with absolute path fix for Render
+# 📜 Serve openapi.yaml manually — bulletproof version
 @app.route('/openapi.yaml')
 def serve_openapi_spec():
-    base_dir = os.path.abspath(os.path.dirname(__file__))
-    return send_from_directory(base_dir, 'openapi.yaml', mimetype='application/yaml')
+    with open("openapi.yaml", "r") as f:
+        content = f.read()
+    return content, 200, {'Content-Type': 'application/yaml'}
 
 # 🌐 Run on the correct host/port for Render
 if __name__ == '__main__':
