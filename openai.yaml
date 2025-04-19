@@ -1,0 +1,43 @@
+openapi: 3.0.1
+info:
+  title: SilverStay Community Data
+  description: Query community data by fields like city, services, contract status, and more.
+  version: 1.0.0
+servers:
+  - url: https://YOUR-RENDER-URL.com
+paths:
+  /data:
+    get:
+      operationId: getCommunityData
+      summary: Get filtered community data
+      parameters:
+        - name: City
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: Hospice
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: "Standing"
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: "Preferred Provider Indicator Calculated"
+          in: query
+          required: false
+          schema:
+            type: string
+        # Add more columns from your sheet here as needed
+      responses:
+        "200":
+          description: A list of matching communities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
