@@ -3,7 +3,7 @@ import os
 
 app = Flask(__name__)
 
-# 🧪 Mock data for GPT integration testing
+# 🧪 Temporary: Return mock data for testing GPT plugin
 def get_sheet_data():
     return [
         ["ID", "City", "Hospice", "Standing"],
@@ -21,7 +21,6 @@ def get_data():
     headers = values[0]
     data_rows = values[1:]
 
-    # Turn rows into dictionaries
     structured_data = []
     for row in data_rows:
         row_dict = {header: "" for header in headers}
@@ -30,7 +29,6 @@ def get_data():
                 row_dict[headers[i]] = value
         structured_data.append(row_dict)
 
-    # Apply filters from query string
     filters = request.args.to_dict()
     if filters:
         filtered_data = []
@@ -43,16 +41,18 @@ def get_data():
 
     return jsonify(structured_data)
 
-# 🔌 Serve plugin files for GPT
+# 🧠 Serve ai-plugin.json for GPT plugin
 @app.route('/.well-known/ai-plugin.json')
 def serve_ai_plugin():
     return send_from_directory('.well-known', 'ai-plugin.json', mimetype='application/json')
 
+# 📜 Serve openapi.yaml with absolute path fix for Render
 @app.route('/openapi.yaml')
 def serve_openapi_spec():
-    return send_from_directory('.', 'openapi.yaml', mimetype='application/yaml')
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+    return send_from_directory(base_dir, 'openapi.yaml', mimetype='application/yaml')
 
-# 🌐 Ensure the app works with Render's port/environment
+# 🌐 Run on the correct host/port for Render
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
