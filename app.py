@@ -12,11 +12,11 @@ def get_sheet_data():
         ["3", "Annapolis", "Yes", "In Good Standing"]
     ]
 
-@app.route('/data', methods=['GET'])
-def get_data():
-    values = get_sheet_data()
-    if not values or len(values) < 2:
-        return jsonify([])
+@app.route('/openapi.yaml')
+def serve_openapi_spec():
+    with open("openapi.yaml", "r") as f:
+        content = f.read()
+    return content, 200, {'Content-Type': 'application/yaml'}
 
     headers = values[0]
     data_rows = values[1:]
