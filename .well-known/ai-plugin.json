@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "SilverStay Community Data",
+  "name_for_model": "silverstayData",
+  "description_for_human": "Query SilverStay's assisted living community database using natural language.",
+  "description_for_model": "Use this to get info about assisted living communities. You can filter by location, service availability, contract status, and more.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://YOUR-RENDER-URL.com/openapi.yaml"
+  },
+  "logo_url": "https://YOUR-RENDER-URL.com/logo.png",
+  "contact_email": "karla@silverstay.com",
+  "legal_info_url": "https://silverstay.com/terms"
+}
