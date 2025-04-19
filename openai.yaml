@@ -4,7 +4,7 @@ info:
   description: Query community data by fields like city, services, contract status, and more.
   version: 1.0.0
 servers:
-  - url: https://YOUR-RENDER-URL.com
+  - url: https://chatgpt-sheets.onrender.com
 paths:
   /data:
     get:
